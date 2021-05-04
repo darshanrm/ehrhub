@@ -1,0 +1,7 @@
+info: Connected to MySql Database {"service":"auth-service","timestamp":"03-05-2021 15:52:39"}
+info: Auth Service started at port 3000 {"service":"auth-service","timestamp":"03-05-2021 15:52:40"}
+info: Connected to MySql Database {"service":"auth-service","timestamp":"03-05-2021 15:56:11"}
+info: Auth Service started at port 3000 {"service":"auth-service","timestamp":"03-05-2021 15:56:11"}
+info: Connected to RabbitMQ server {"service":"auth-service","timestamp":"03-05-2021 15:56:11"}
+info: New JWK keystore is generated Successfully {"service":"auth-service","timestamp":"03-05-2021 15:56:11"}
+info: RabbitMQ || published new message to key-distribution exchange {"service":"auth-service","timestamp":"03-05-2021 15:56:11"}

@@ -1,0 +1,1 @@
+module.exports.medicalHistoryController = require('./medicalHistory.controller');

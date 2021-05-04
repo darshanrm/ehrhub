@@ -1,0 +1,24 @@
+{
+  "name": "DocService",
+  "version": "1.0.0",
+  "description": "Doc Service is Aggregator Service",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "Darshan",
+  "license": "ISC",
+  "dependencies": {
+    "amqplib": "^0.6.0",
+    "axios": "^0.21.1",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "node-jose": "^2.0.0",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
+    "winston": "^3.3.3"
+  }
+}

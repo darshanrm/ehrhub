@@ -1,0 +1,12 @@
+/AuthService/node_modules
+/DocService/node_modules
+/HcpService/node_modules
+/LabUploadedDocService/node_modules
+/MedicalHistoryService/node_modules
+/MedicationService/node_modules
+/PatientService/node_modules
+/PdfGenerationService/node_modules
+/PrescriptionService/node_modules
+/UserUploadedDocService/node_modules
+/VisitService/node_modules
+/VisitUploadedDocService/node_modules
