@@ -1,10 +1,10 @@
 const logger = require("../middlewares/logger");
-const { visits } = require('../models')
+const { visits } = require("../models");
 
 const createNewVisit = (req, res) => {
   visits
     .create({
-      patient_id: req.body.userId,
+      patient_id: req.body.patient_id,
       doctor_id: req.body.hcpId,
       facility_id: req.body.facilityId,
       vitals_id: req.body.vitalsId,

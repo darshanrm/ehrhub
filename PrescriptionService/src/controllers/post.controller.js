@@ -1,10 +1,10 @@
-const { prescriptions, prescribed_medicines } = require('../models')
+const { prescriptions, prescribed_medicines } = require("../models");
 const { publishToQueue } = require("../../rabbitmq");
 
 const createNewPrescription = (req, res) => {
   prescriptions
     .create({
-      patient_id: req.body.userId,
+      patient_id: req.body.patient_id,
       hcp_id: req.body.hcpId,
       visit_id: req.body.visitId,
     })
@@ -26,11 +26,11 @@ const createNewPrescription = (req, res) => {
           })
           .then(counter++);
       });
-      publishToQueue(req.body);
+
       let completionStatus = () => {
         if (counter == size) {
           clearInterval(timer);
-          res.send("Medicine record saved successfully");
+          res.send(prescription);
         }
       };
       let timer = setInterval(completionStatus, 10);

@@ -1,5 +1,5 @@
 const logger = require("../middlewares/logger");
-const { visits } = require('../models')
+const { visits } = require("../models");
 
 const getVisitDetailsByPatientId = (req, res) => {
   visits
@@ -112,8 +112,43 @@ const getVisitDetailsByPatientIdAndHcpId = (req, res) => {
   };
 };
 
+const getVisitDetailsByVisitId = (req, res) => {
+  visits
+    .findAll({
+      where: {
+        id: req.query.visitId,
+      },
+    })
+    .then((visitRecords) => {
+      logger.log({
+        level: "http",
+        message:
+          "Get all visit records where HCP id is " +
+          req.query.hcpId +
+          " successful",
+        metaData: {
+          ip: req.ip,
+          performedBy: req.query.hcpId,
+        },
+      });
+      res.send(visitRecords);
+    }).catch = (e) => {
+    logger.log({
+      level: "error",
+      message:
+        "Get all visit records where HCP id is " + req.query.hcpId + " failed",
+      metaData: {
+        ip: req.ip,
+        performedBy: req.query.hcpId,
+      },
+    });
+    res.status(400).send("Some Error Occured!! Retry in some time");
+  };
+};
+
 module.exports = {
   getVisitDetailsByPatientId,
   getVisitDetailsByHcpId,
   getVisitDetailsByPatientIdAndHcpId,
+  getVisitDetailsByVisitId,
 };

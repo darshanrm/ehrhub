@@ -1,7 +1,8 @@
 const logger = require("../middlewares/logger");
 const amqp = require("amqplib");
+const { publishReport, publishPrescription } = require("../../rabbitmq");
 const axios = require("axios");
-require('dotenv').config({ path: __dirname + '/../../.env'});
+require("dotenv").config({ path: __dirname + "/../../.env" });
 
 const storeDocument = (req, res) => {
   const patientName = req.body.patientName;
@@ -10,16 +11,19 @@ const storeDocument = (req, res) => {
   const summary = req.body.summary;
   const medicines = req.body.medicines;
   const clinicName = req.body.clinicName;
-  const userId = req.body.userId;
+  const patient_id = req.body.patient_id;
   const hcp_id = req.body.hcp_id;
   const document_name = req.body.document_name;
   let visitId;
+  const medicines = req.body.medicines;
+  var reportData = null;
+  var prescriptionData = null;
 
-  axios({
+  const visit = axios({
     method: "post",
     url: `${process.env.VISITS_SERVICE_URL}/visitDetails/post/newVisit`,
     data: {
-      userId: req.body.userId,
+      patient_id,
       hcpId: req.body.hcp_id,
       facilityId: req.body.facilityId,
       vitalsId: req.body.vitalsId,
@@ -29,7 +33,7 @@ const storeDocument = (req, res) => {
     .then(function (visitData) {
       visitId = visitData.data.id;
       //data to be submitted to queue
-      const data = {
+      reportData = {
         patientName,
         hcpName,
         reason,
@@ -37,10 +41,33 @@ const storeDocument = (req, res) => {
         medicines,
         clinicName,
         visitId,
-        userId,
+        patient_id,
         hcp_id,
         document_name,
       };
+
+      axios({
+        method: "post",
+        url: `${process.env.PRESCRIPTIONS_SERVICE_URL}/Prescription/post/newPrescription`,
+        data: {
+          visitId,
+          hcpId = hcp_id,
+          patient_id,
+          medicines,
+        },
+      })
+      .then((prescription)=>{
+        prescriptionData = {
+          prescription_id = prescription.id,
+          clinicName,
+          hcpName,
+          patientName,
+          medicines,
+          patient_id,
+          hcpId,
+          visitId
+        }
+      })
 
       logger.log({
         level: "http",
@@ -50,41 +77,12 @@ const storeDocument = (req, res) => {
           performedBy: req.hcpId,
         },
       });
-      console.log(data);
-      connect(data);
+      publishReport(reportData);
+      publishPrescription(prescriptionData);
     })
     .catch(function (err) {
       console.log(err);
     });
-
-  async function connect(data) {
-    try {
-      const connection = await amqp.connect("amqp://localhost:5672");
-      const channel = await connection.createChannel();
-      const result = await channel.assertQueue("VisitData", { durable: true });
-      channel.sendToQueue("VisitData", Buffer.from(JSON.stringify(data)), {
-        persistent: true,
-      });
-      logger.log({
-        level: "http",
-        message: `Visit report for patient ${userId} and healthcare professional ${hcp_id} has been submitted to the queue`,
-        metaData: {
-          performedBy: hcp_id,
-        },
-      });
-      res.status(200).send(`Document submitted to the queue`);
-    } catch (error) {
-      logger.log({
-        level: "error",
-        message: `Some error occured while submitting the visit report for patient ${userId} and healthcare professional ${hcp_id} to the queue`,
-        metaData: {
-          performedBy: req.hcp_id,
-        },
-      });
-
-      res.status(400).send(`Failed to submit the report. Please try again`);
-    }
-  }
 };
 
 module.exports = {

@@ -12,5 +12,7 @@ router
   .route("/byPatientIdAndHcpId")
   .get(getController.getVisitDetailsByPatientIdAndHcpId);
 
-//TODO: get visit details by visit Id
+//get visit details by visit Id
+router.route("/byVisitId").get(getController.getVisitDetailsByVisitId);
+
 module.exports = router;

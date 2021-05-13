@@ -1,7 +1,9 @@
 const pdfkit = require("pdfkit");
 const fs = require("fs");
 const path = require("path");
-const { publishPrescription } = require("../rabbitmq/publishers/prescriptionPublisher");
+const {
+  publishPrescription,
+} = require("../rabbitmq/publishers/prescriptionPublisher");
 
 const createPrescription = (data) => {
   //create new document
@@ -49,7 +51,7 @@ const createPrescription = (data) => {
 
   //store pdf and metadata
   var pdf = {};
-  pdf.userId = data.userId;
+  pdf.patient_id = data.patient_id;
   pdf.hcpId = data.hcpId;
   pdf.visitId = data.visitId;
 

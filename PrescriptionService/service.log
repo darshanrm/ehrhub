@@ -1,0 +1,6 @@
+info: Connected to MySql Database {"service":"PrescriptionService","timestamp":"12-05-2021 10:34:00"}
+info: Prescription Service started at port 8087 {"service":"PrescriptionService","timestamp":"12-05-2021 10:34:00"}
+info: Connected to RabbitMQ server {"service":"PrescriptionService","timestamp":"12-05-2021 10:34:01"}
+error: GET | Key Error connect ECONNREFUSED 127.0.0.1:3000 {"stack":"Error: connect ECONNREFUSED 127.0.0.1:3000\n    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1144:16)","config":{"url":"http://localhost:3000/auth/keys","method":"get","headers":{"Accept":"application/json, text/plain, */*","User-Agent":"axios/0.21.1"},"transformRequest":[null],"transformResponse":[null],"timeout":0,"xsrfCookieName":"XSRF-TOKEN","xsrfHeaderName":"X-XSRF-TOKEN","maxContentLength":-1,"maxBodyLength":-1},"code":"ECONNREFUSED"}
+info: GET Keyset successfull {"service":"PrescriptionService","timestamp":"12-05-2021 10:34:02"}
+info: New JWK keystore is accquired Successfully {"service":"PrescriptionService","timestamp":"12-05-2021 10:34:02"}
