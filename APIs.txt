@@ -1,0 +1,40 @@
+Doctor APIs:
+1. Registration/SignUp
+
+    REQUEST: 
+        TYPE: POST
+        URL: localhost/auth/signup
+        PAYLOAD: {
+            "email" : "abc@email.com",
+            "password" : "password",
+            "full_name" : "john alexa",
+            "role" : "patient",
+            "patientDetails" : {
+                "line1" : "A105",
+                "line2" : "xyz CHS",
+                "line3" : "Mumbai",
+                "country" : "India",
+                "state" : "Maharashtra",
+                "city: : "Mumbai",
+                "district" : "Mumbai",
+                "pin_code" : 421203,
+                "age" : 23,
+                "gender" : "male",
+                "mobile_no" : 1234567890,
+                "date_of_birth" : "2021-05-29"
+            }
+        }
+
+    RESPONSE: 201, "User created successfully."
+
+2. Login
+
+    REQUEST:
+        TYPE: POST
+        URL: localhost/auth/login
+        PAYLOAD: {
+            "email" : "abc@email.com",
+            "password" : "password"
+        }
+
+        RESPONSE: 200, "Logged in successfully"
